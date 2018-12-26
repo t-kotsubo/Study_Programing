@@ -23,11 +23,15 @@
 
 # print(sum)
 
-def hello(name=input('名前を入力してください')):
-    if name =="":
-        return '名前を教えてください'
-    else:
-        return name+'さん、こんにちは'
+# def hello(name=input('名前を入力してください')):
+#     if name =="":
+#         return '名前を教えてください'
+#     else:
+#         return name+'さん、こんにちは'
 
-print(hello())
+# print(hello())
 
+import test
+
+print(test.Company)
+test.show_name()

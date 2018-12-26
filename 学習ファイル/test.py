@@ -310,35 +310,39 @@
 # print(c.country)
 # print(c.city)
 
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+# class Person:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
 
-    def getName(self):
-        return self.name
+#     def getName(self):
+#         return self.name
     
-    def getAge(self):
-        return self.age
+#     def getAge(self):
+#         return self.age
 
-class Customer(Person):
-    def __init__(self, name, age, adr, tel):
-        super().__init__(name, age)
+# class Customer(Person):
+#     def __init__(self, name, age, adr, tel):
+#         super().__init__(name, age)
 
-        self.adr = adr
-        self.tel = tel
+#         self.adr = adr
+#         self.tel = tel
 
-    def getAdr(self):
-        return self.adr
+#     def getAdr(self):
+#         return self.adr
 
-    def getTel(self):
-        return self.tel
+#     def getTel(self):
+#         return self.tel
 
-c = Customer("小壷", 43, "Tokyo", "090-4643-4942")
+# c = Customer("小壷", 43, "Tokyo", "090-4643-4942")
 
 # name = c.getName()
 # age = c.getAge()
 # print(c.name)
 # print(c.age)
-print(c.adr)
-print(c.tel)
+# print(c.adr)
+# print(c.tel)
+
+Company = "LogixSquare"
+def show_name():
+    print("Takayuki Kotsubo")
