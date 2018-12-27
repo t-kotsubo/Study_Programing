@@ -10,9 +10,8 @@
 # hello('こんにちは')
 # def print_hand(hand, player_name='ゲスト'):
 #         print(player_name +'は' +hand + 'を出しました')
-    
 
-    
+
 # print_hand('グー','Taka')
 
 # def add(a, b):
@@ -31,7 +30,51 @@
 
 # print(hello())
 
-import test
+# import test
 
-print(test.Company)
-test.show_name()
+# print(test.Company)
+# test.show_name()
+
+# class Test:
+#     pass
+
+# test1 = Test()
+# test1.name ="Taka"
+# test1.address ="Tokyo"
+# test1.age = 43
+
+# test2 = Test()
+# test2.name ="Toshi"
+# test2.address ="Kanagawa"
+# test2.age = 36
+
+# print(test1.name, test2.name)
+
+# from test import Child
+
+# child1 = Child("Taka", 34, 169)
+# child1.info()
+
+# num = 10
+# num *= 10
+# print(num)
+
+# lists = ["Apple", "Banana", 2, 5]
+
+# lists.append('Peach')
+# lists.insert(1,'Lemon')
+# lists[4] = 'Grape'
+# lists[3] = 'PineApple'
+
+
+# # print(lists[1])
+
+
+pairs = {3:"C",1:"A", 2:"B" }
+
+pairs[3] = 'D'
+pairs[4] = 'E'
+
+for pair in pairs:
+    print(str(pair)+'のペアは'+pairs[pair]+'です')
+

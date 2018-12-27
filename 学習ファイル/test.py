@@ -343,6 +343,56 @@
 # print(c.adr)
 # print(c.tel)
 
-Company = "LogixSquare"
-def show_name():
-    print("Takayuki Kotsubo")
+# Company = "LogixSquare"
+# def show_name():
+#     print("Takayuki Kotsubo")
+
+# import random
+
+# num = random.randint(0,5)
+# print(num)
+
+# class Test:
+#     name_common = 'user'
+#     number_common = 2019
+
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+
+# test = Test("Takayuki", 43)
+# test2 = Test("Satoshi", 30)
+
+# Test.name_common ="user2"
+# Test.number_common = 2020
+# print(Test.name_common)
+# print(Test.number_common)
+# print(test.name)
+# print(test.age)
+# print(Test.name_common)
+# print(Test.number_common)
+# print(test2.name)
+# print(test2.age)
+
+class Parent:
+    # name = "taka"
+    # age = 34
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+class Child(Parent):
+    def __init__(self, name, age, height):
+        super().__init__(name, age)
+        self.height = height
+
+    def info():
+        print(self.name, self.age, self.height)
+
+# from test import Child
+
+import Child
+child1 = Child("Taka", 34, 169)
+child1.info()
+# print(child1.name, child1.age, child1.height)
