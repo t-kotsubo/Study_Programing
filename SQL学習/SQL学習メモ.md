@@ -1,3 +1,50 @@
+# WHERE
+
+
+
+
+特定のデータを取得するためには、「どこの」という意味を持つ「WHERE」というSQLを用います。「SELECT」と「FROM」で「どのテーブルのどのカラムのデータを取得するか」までは決まっていますので、「WHERE」が意味するのは、「どこのレコード（横の列）を取得するか」になります。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507180414621.png)
+
+# WHERE(2)
+
+
+
+「どこのレコード（横の列）のデータを取得するか」を指定するためには、左の図のように「＝」を用いて、「〇〇カラムが〇〇であるレコード」といった意味になるように条件を指定します。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507180441584.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1523346082536.png)
+
+## 「食費」のデータを取得しよう
+
+
+
+今回は「WHERE category = "食費"」のような条件で、「category」が「食費」であるデータを取得してみましょう。データには「データ型」と呼ばれるルールにより、「食費」のようなテキストはクォーテーションで囲む必要があります。「データ型」については、次の ページで詳しく説明します。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507180591820.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507188992729.png)
+
+# データ型
+
+
+
+データベースに保存されているデータには、「データ型」と呼ばれるルールがあります。「データ型」とは、テキストデータや数値データ、さらには日付データといったように「データの種類」を示すものです。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1523346283859.png)
+
+## 日付データを取得しよう
+
+
+
+次に「日付が2017-07-01であるデータ」を取得してみましょう。「日付」を示す「purchased_atカラム」には「日付データ」が保存されています。<u>「日付データ」はダブルクォーテーションまたはシングルクォーテーションで囲む必要があるため、忘れないようにしましょう</u>。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1523346364863.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507180835834.png)
+
 # IS NULL・IS NOT NULL
 
 ## NULLのデータを取得する
@@ -102,3 +149,52 @@ OR演算子は、AND演算子と同様に、複数の条件を扱います。「
 
 ![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/101/1507185907819.png)
 
+# LIKE演算子
+
+
+
+「ある文字を含むデータ」を取得したい場合は、「〜のような」という意味を持つ、「LIKE演算子」を用います。図のようにすることで「指定したカラムが〇〇を含む（〇〇のような）レコード」という条件となります。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922405228.png)
+
+## ワイルドカード
+
+
+
+LIKE演算子を用いる際に覚えておく必要があるのが「ワイルドカード」です。コンピュータの世界で「ワイルドカード」とは、どんな文字列にも一致することを指す記号です。LIKE演算子では「％」をワイルドカードとして扱います。これにより図では「プリン」を含むデータを全て取得しています。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922515266.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922539358.png)
+
+## 前方一致
+
+
+
+ワイルドカードを文字列の前後どちらかにのみ置くことも可能です。図のように「〇〇%」とした場合、「〇〇」以降はどんな文字列にも一致しますので、「〇〇」で始まる文字列を検索することができます。このような検索を「前方一致」と呼びます。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922863693.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922880829.png)
+
+
+
+## 後方一致
+
+
+
+また、図のように「%〇〇」とした場合、「〇〇」より前はどんな文字列にも一致しますので「〇〇」で終わる文字列を検索することができます。このような検索を「後方一致」と呼びます。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546922921935.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1547783117899.png)
+
+# NOT演算子
+
+​	
+
+「〇〇を含まないデータ」や「〇〇に一致しないデータ」のような条件でデータを取得したい場合は「否定」を意味する「NOT演算子」を用います。これまで学習した演算子の前に「NOT」を置くことで、その条件を満たさないデータを取得することが可能です。
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546923241886.png)
+
+![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/sql/study/1/1546923717517.png)
