@@ -102,7 +102,7 @@ https://techacademy.jp/magazine/10268
 
 ![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/git/study/1/1485405607192.png)
 
-* 変更内容が見たければ、`git log -p`で確認できる。
-* 表示内容が多い時は下の図のように特殊な表示モードになる。上下キーを使うと表示範囲を変えられて、Qキーを押すことで終了できる。
+* コミットメッセージだけでなく変更内容も見たければ、`git log -p`で確認できる。
+* 表示内容が多い時は下の図のように特殊な表示モードになる。上下キーを使うと表示範囲を変えられて、<u>**Qキー**を押すことで終了できる</u>。
 
 ![img](https://d2aj9sy12tbpym.cloudfront.net/progate/shared/images/slide/git/study/1/1485411741288.gif)
