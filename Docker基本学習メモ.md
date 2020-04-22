@@ -1,5 +1,5 @@
 
-### コンテナ型仮想化
+### imaコンテナ型仮想化
 コンテナ型仮想化技術では仮想化ソフトウェアなしにOSのリソースを隔離し、仮想OSにします。この仮想OSをコンテナと呼びます。
 
 
@@ -97,6 +97,11 @@ docker image pull [options] リポジトリ名[:タグ名]
 ※タグ名を省略した場合はデフォルトタグ（多くの場合latest)が利用される
 ```
 
+### Dockerイメージにタグをつける
+```
+docker image tag 元イメージ名[:タグ] 新イメージ名[:タグ]
+```
+
 ### Dockerホストに保持されているイメージの一覧を表示する
 
 ```
@@ -128,7 +133,9 @@ docker image tag example/echo:latest example/echo:0.1.0
 ### コンテナを作成して起動する
 
 ```
-docker container run -i -t -d -p ホスト(Ubuntu)側のポート:コンテナ側のポート --name 任意のコンテナ名 元にするイメージ名またはイメージID
+docker container run [options] イメージ名[:タグ][コマンド] [コマンド引数]
+
+docker container run [options] イメージID[コマンド] [コマンド引数]
 ```
 #### ●docker container runでよく利用されるオプション
 
@@ -141,7 +148,7 @@ docker container run -i -t -d -p ホスト(Ubuntu)側のポート:コンテナ�
 | -d         | バックグラウンドで実行する ※2                                |
 | --name     | コンテナ名を指定する                                         |
 
-※1: -i -t もしくは-itの形でよく利用される
+※1: -i -t もしくは-itのセットの形式でよく利用される
 ※2: -p ホスト側のポート：コンテナ側のポートの形式で指定する
 
 
@@ -197,6 +204,9 @@ docker container ls -a
 ### コンテナを停止する
 ```
 docker container stop コンテナIDまたはコンテナ名
+
+※すべてのコンテナを停止する場合
+docker container stop $(docker ps -q)
 ```
 
 ### コンテナを再起動する
@@ -210,7 +220,13 @@ docker container rm コンテナIDまたはコンテナ名
 ※通常、docker container rmコマンドでは実行中のコンテナを破棄することはできないが、-fオプションをつけることで実行中のコンテナの停止・削除まで行うことが可能
 ```
 
+### イメージを破棄する
+```
+docker image rmi [イメージID]
+```
+
 ### 標準出力のログを取得する
+
 ``` 
 docker container logs [options] コンテナIDまたはコンテナ名
 ```
@@ -247,3 +263,24 @@ docker container stats [opiotns] [表示するコンテナID...]
 ```
 
 ※topコマンドのDocker版のようなもの
+
+
+### Dockerコンテナのシェルの中に入る
+```
+docker exec -it コンテナ名 bash
+```
+
+
+
+## MariaDB
+
+### DBサーバーインスタンスの静止
+```
+docker run --name 任意のコンテナ名 -e MYSQL_ROOT_PASSWORD=rootユーザーに設定するパスワード -d mariadb:タグ名（バージョン名）
+```
+
+### MariaDBのインスタンスに外部から接続
+```
+docker run --name コンテナ名 -e MYSQL_ROOT_PASSWORD=rootユーザーのパスワード -d mariadb:tag --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+```
+
