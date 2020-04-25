@@ -53,6 +53,11 @@ Dockerfileは、Dockerのイメージを自動で作成してくれるファイ�
 | EXPOSE     | ポートを公開します。                                         |      |
 | VOLUME     | 永続データにアクセスして保存するためのディレクトリマウントポイントを作成します。 |      |
 
+Dockerfileの参考サイト：
+http://docs.docker.jp/engine/articles/dockerfile_best-practice.html
+
+
+
 ## DockerイメージとDockerコンテナの関連性
 
 | 名称               | 役割                                                         |
@@ -130,6 +135,13 @@ docker image tag 元イメージ名[:タグ] 新イメージ名[:タグ]
 docker image tag example/echo:latest example/echo:0.1.0
 ```
 
+### Dockerイメージ名：タグ名を変更する
+```
+dokcer tag イメージID イメージ名：タグ名
+
+```
+
+
 ### コンテナを作成して起動する
 
 ```
@@ -137,12 +149,16 @@ docker container run [options] イメージ名[:タグ][コマンド] [コマン
 
 docker container run [options] イメージID[コマンド] [コマンド引数]
 ```
+
+
 #### ●docker container runでよく利用されるオプション
 
 | オプション | 機能                                                         |
 | ---------- | ------------------------------------------------------------ |
 | -i         | docker起動後にコンテナ側の標準入力を開いたままにする※1       |
 | -t         | ターミナルを有効にする ※1                                    |
+| -p         | 「Windows側ポート番号:コンテナ側ポート番号」のようにポートマッピングを指定 |
+| -e         | 環境変数（enviroment variables)を設定する                    |
 | --rm       | コンテナ停止時にコンテナを破棄する                           |
 | -v         | ホストとコンテナ間でディレクトリ、ファイルを共有するときに使用する |
 | -d         | バックグラウンドで実行する ※2                                |
@@ -270,9 +286,39 @@ docker container stats [opiotns] [表示するコンテナID...]
 docker exec -it コンテナ名 bash
 ```
 
+### Dockerコンテナの内部IPアドレスを確認する
+
+１．実行中のコンテナに入る
+
+```
+docker exec -it コンテナID/コンテナ名 /bin/bash
+```
+
+２．コンテナ内で以下のコマンドでIPアドレスを確認する
+
+```
+hostname -i
+```
+
+### Dockerコンテナの内で公開しているポート番号が外部から見てどのポート番号にマッピングされているか調べる
+
+例）Docker コンテナ内の Web アプリケーションがポート番号 `5000` で動作しているとして、それが、Docker ホスト側から見て、どのポート番号にマッピングされているかを調べる場合
+
+```
+docker port container_name 5000
+```
 
 
-## MariaDB
+
+### Docker コンテナのログを取得
+
+```
+docker container logs コンテナID/コンテナ名
+```
+
+---
+
+## MariaDB Docker コンテナ作成
 
 ### DBサーバーインスタンスの静止
 ```
@@ -281,6 +327,64 @@ docker run --name 任意のコンテナ名 -e MYSQL_ROOT_PASSWORD=rootユーザ�
 
 ### MariaDBのインスタンスに外部から接続
 ```
-docker run --name コンテナ名 -e MYSQL_ROOT_PASSWORD=rootユーザーのパスワード -d mariadb:tag --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+docker run --name コンテナ名 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=rootユーザーのパスワード -d mariadb:tag --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
+docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=new_mariadb -e MYSQL_USER=kotsubo -e MYSQL_PASSWORD=kotsubo -d mariadb:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
+docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=kotsubodb -e MYSQL_USER=kotsubo -e MYSQL_PASSWORD=kotsubo -d kotsubodb:1.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ```
+
+#### ●DockerのMySQLイメージ起動時に渡す環境変数
+
+| 環境変数                     | 内容                                                         |
+| ---------------------------- | ------------------------------------------------------------ |
+| MYSQL_ROOT_PASSWORD          | この変数は必須のもので、MySQLにおけるスーパーユーザである`root`アカウントに設定するためのパスワードを指定します。<br />`root`ユーザはデフォルトで作成され`MYSQL_ROOT_PASSWORD`変数により指定されたパスワードが設定されます。 |
+| MYSQL_DATABASE               | この変数はオプションで、イメージの起動時に作成するデータベースの名前を指定します。もしユーザ名とパスワードが指定された場合（下記を参照）はユーザはこのデータベースへのスーパーユーザアクセス権（`GRANT ALL`に相当）を与えられます。 |
+| MYSQL_USER<br>MYSQL_PASSWORD | これらの変数はオプションで、新規ユーザの作成とそのユーザのパスワード設定に使用されます。このユーザは`MYSQL_DATABASE`変数で指定されたデータベースに対してスーパーユーザとしての権限（上記を参照）を与えられます。 |
+| MYSQL_ALLOW_EMPTY_PASSWORD   | この変数はオプションで、`yes`を設定することで、`root`ユーザに空のパスワードを設定してコンテナを起動することを許可します。 |
+| MYSQL_RANDOM_ROOT_PASSWORD   | オプションの変数で、`yes`を設定することで、`root`ユーザのための初期パスワードを（`pwgen`を利用して）ランダムで生成します。生成されたパスワードは標準出力に表示されます。（`GENERATED ROOT PASSWORD: ...`） |
+| MYSQL_ONETIME_PASSWORD       | （`MYSQL_USER`で指定されたユーザではなく）rootユーザにおける初回のログインのパスワード変更を強制するために一度でパスワードを期限切れにするための設定を行います。 |
+
+参考ページ：https://hub.docker.com/_/mariadb　「Enviroment Variable」より
+
+
+
+![image-20200424114552683](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424114552683.png)
+
+
+
+![image-20200424114700852](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424114700852.png)
+
+
+![image-20200424113435872](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424113435872.png)
+
+
+
+---
+
+## Django Dockerコンテナ作成
+
+### 手順
+参考サイト：https://djangobrothers.com/blogs/django_docker/
+
+```
+ docker run -itd -p 127.0.0.1:8000:8000 -v ホストディレクトリの絶対パス:コンテナの絶対パス イメージ名 --name  コンテナ名前（任意）
+ 
+ 例）
+docker container run -itd -p 127.0.0.1:8000:8000 -v /home/kotsubo/Django/src:/code --name django_kotsubo django_kotsubo:01
+```
+
+※ホストのディレクトリをDockerのコンテナから参照できるようにする。
+
+参考サイト：
+https://qiita.com/homines22/items/2730d26e932554b6fb58
+https://qiita.com/Yarimizu14/items/52f4859027165a805630
+
+
+
+
+
+
 
