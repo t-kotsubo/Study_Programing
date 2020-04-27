@@ -359,6 +359,8 @@ docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_
 
 
 
+
+
 2. 右側のプラスボタンをクリックしてポートの設定を行う
  ![](C:\Users\USER\Desktop\設定2.png)
 
@@ -386,8 +388,9 @@ https://8oclockis.blogspot.com/2018/04/virtualbox.html
 
 ## Django Dockerコンテナ作成
 
-### 手順
 参考サイト：https://djangobrothers.com/blogs/django_docker/
+
+### Dockerコンテナ内のディレクトリを作業ディレクトリと共有してコンテナを起動する
 
 ```
  docker run -itd -p 127.0.0.1:8000:8000 -v ホストディレクトリの絶対パス:コンテナの絶対パス イメージ名 --name  コンテナ名前（任意）
@@ -404,7 +407,19 @@ https://qiita.com/Yarimizu14/items/52f4859027165a805630
 
 
 
+### 認証情報を環境変数に格納する
 
+参考サイト：
+
+https://e-tec-memo.herokuapp.com/article/172/
+
+
+
+### 設定ファイルを開発用と本番用に分割する
+
+参考サイト：
+https://medium.com/@kjmczk/django-multiple-settings-2a4c15c7c7b0
+https://qiita.com/okoppe8/items/e60d35f55188c0ab9ecc
 
 
 
