@@ -351,13 +351,33 @@ docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_
 
 
 
+## VirtualBoxの仮想マシン上のポートフォワーディング設定
+
+1. VirtualBoxの仮想マシンの「設定」→「ネットワーク」→アダプター１のタグの「高度」→「ポートフォワーディング」をクリックする
+
+![](C:\Users\USER\Desktop\設定1.png)
+
+
+
+2. 右側のプラスボタンをクリックしてポートの設定を行う
+ ![](C:\Users\USER\Desktop\設定2.png)
+
+   ※名前は任意のものでOK
+
+   参考サイト：
+
+https://8oclockis.blogspot.com/2018/04/virtualbox.html
+
+
+## TaraTermへの接続
+
 ![image-20200424114552683](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424114552683.png)
 
 
 
 ![image-20200424114700852](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424114700852.png)
 
-
+## MySQL Workbenchへの接続
 ![image-20200424113435872](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200424113435872.png)
 
 
