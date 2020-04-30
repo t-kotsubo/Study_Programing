@@ -1,5 +1,5 @@
 
-### imaコンテナ型仮想化
+### コンテナ型仮想化
 コンテナ型仮想化技術では仮想化ソフトウェアなしにOSのリソースを隔離し、仮想OSにします。この仮想OSをコンテナと呼びます。
 
 
@@ -138,11 +138,13 @@ docker image tag example/echo:latest example/echo:0.1.0
 ### Dockerイメージ名：タグ名を変更する
 ```
 dokcer tag イメージID イメージ名：タグ名
-
 ```
 
 
+
 ### コンテナを作成して起動する
+
+#### docker runコマンド
 
 ```
 docker container run [options] イメージ名[:タグ][コマンド] [コマンド引数]
@@ -151,7 +153,7 @@ docker container run [options] イメージID[コマンド] [コマンド引数]
 ```
 
 
-#### ●docker container runでよく利用されるオプション
+##### ●docker container runでよく利用されるオプション
 
 | オプション | 機能                                                         |
 | ---------- | ------------------------------------------------------------ |
@@ -166,6 +168,40 @@ docker container run [options] イメージID[コマンド] [コマンド引数]
 
 ※1: -i -t もしくは-itのセットの形式でよく利用される
 ※2: -p ホスト側のポート：コンテナ側のポートの形式で指定する
+
+
+
+##### 環境変数をホストOS側からゲストOS（コンテナ）に渡して起動する
+
+###### ●コマンド引数で環境変数を「コンテナ」渡す（-e --env）
+###### 【変数名と値を指定して渡す】
+
+```
+docker run --env [ 変数名=値 ] [ その他のオプション ] [イメージ名] [コマンド]
+docker run -e [ 変数名=値 ] [ その他のオプション ] [イメージ名] [コマンド]
+
+例) docker run -e hoge=$fuga -e piyo="hogera" alpine env
+```
+
+###### 【ホストの環境変数のまま渡す】
+
+```
+docker run --env [ ホスト側変数名 ] [ その他のオプション ] [ イメージ名 ] [ コマンド ]
+docker run -e [ ホスト側変数名 ] [ その他のオプション ] [ イメージ名 ] [ コマンド ]
+
+例）docker run -e hoge -e piyo alpine env
+```
+
+###### ●コマンド引数から外部ファイルで環境変数を「コンテナ」に渡す（--env-file）
+
+###### 【ホストの環境変数のまま渡す】
+
+```
+docker run --env-file [ ファイルパス ] [ その他のオプション ] [ イメージ名 ] [ コマンド ]
+
+例) docker run --env-file $(pwd)/myEnvFile alpine env
+```
+
 
 
 ### コンテナを起動する（作成は行わず、既存のものを起動する）
@@ -333,7 +369,7 @@ docker run --name コンテナ名 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=rootユー
 docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=new_mariadb -e MYSQL_USER=kotsubo -e MYSQL_PASSWORD=kotsubo -d mariadb:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 
-docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=kotsubodb -e MYSQL_USER=kotsubo -e MYSQL_PASSWORD=kotsubo -d kotsubodb:1.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+docker run --name mariadb -p 3306:3306 --env-file /home/kotsubo/DockerLearning/.env -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=kotsubodb -e MYSQL_USER=kotsubo -e MYSQL_PASSWORD=kotsubo -d kotsubodb:1.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ```
 
 #### ●DockerのMySQLイメージ起動時に渡す環境変数
@@ -356,8 +392,6 @@ docker run --name mariadb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_
 1. VirtualBoxの仮想マシンの「設定」→「ネットワーク」→アダプター１のタグの「高度」→「ポートフォワーディング」をクリックする
 
 ![](C:\Users\USER\Desktop\設定1.png)
-
-
 
 
 
@@ -396,7 +430,7 @@ https://8oclockis.blogspot.com/2018/04/virtualbox.html
  docker run -itd -p 127.0.0.1:8000:8000 -v ホストディレクトリの絶対パス:コンテナの絶対パス イメージ名 --name  コンテナ名前（任意）
  
  例）
-docker container run -itd -p 127.0.0.1:8000:8000 -v /home/kotsubo/Django/src:/code --name django_kotsubo django_kotsubo:01
+docker container run -itd -p 127.0.0.1:8000:8000 --env-file /home/kotsubo/DockerLearning/.env -v /home/kotsubo/DockerLearning/Django/src:/code --name django_kotsubo django_kotsubo:1.0
 ```
 
 ※ホストのディレクトリをDockerのコンテナから参照できるようにする。
@@ -423,3 +457,6 @@ https://qiita.com/okoppe8/items/e60d35f55188c0ab9ecc
 
 
 
+## VS codeとの接続
+
+![image-20200428094857802](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200428094857802.png)
