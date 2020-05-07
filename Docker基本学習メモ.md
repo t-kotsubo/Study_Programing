@@ -430,7 +430,9 @@ https://8oclockis.blogspot.com/2018/04/virtualbox.html
  docker run -itd -p 127.0.0.1:8000:8000 -v ホストディレクトリの絶対パス:コンテナの絶対パス イメージ名 --name  コンテナ名前（任意）
  
  例）
-docker container run -itd -p 127.0.0.1:8000:8000 --env-file /home/kotsubo/DockerLearning/.env -v /home/kotsubo/DockerLearning/Django/src:/code --name django_kotsubo django_kotsubo:1.0
+docker container run -itd -p 8000:8000 --env-file /home/kotsubo/DockerLearning/.env -v /home/kotsubo/DockerLearning/Django/src:/code --name django_kotsubo django_kotsubo:1.0
+
+docker container run -itd -p 0.0.0.0:8000:8000 --env-file /home/kotsubo/DockerLearning/.env -v /home/kotsubo/DockerLearning/Django/src:/code --name django_kotsubo django_kotsubo:1.0
 ```
 
 ※ホストのディレクトリをDockerのコンテナから参照できるようにする。
@@ -457,6 +459,18 @@ https://qiita.com/okoppe8/items/e60d35f55188c0ab9ecc
 
 
 
+![](C:\Users\USER\Desktop\VB_Django_port設定.png)
+
+
+
+---
+
 ## VS codeとの接続
 
 ![image-20200428094857802](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200428094857802.png)
+
+![image-20200501144834171](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200501144834171.png)
+
+![image-20200501144941248](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200501144941248.png)１９２
+
+![image-20200501145810650](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20200501145810650.png)
